@@ -21,7 +21,7 @@ public class DialogueOpener : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            DialogueManager.StartConversation(conversation);
+            if(canTalk) DialogueManager.StartConversation(conversation);
         }
     }
 
@@ -31,14 +31,17 @@ public class DialogueOpener : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        overlapedItemNum++;
-        conversation = other.gameObject.name;
-        canTalk = true;
+        if (other.CompareTag("NPC"))
+        {
+            overlapedItemNum++;
+            conversation = other.gameObject.name;
+            canTalk = true;    
+        }
     }
 
-    void OnCollisionExit(Collision col)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (--overlapedItemNum == 0)
+        if (other.CompareTag("NPC") && --overlapedItemNum == 0)
         {
             conversation = null;
             canTalk = false;
