@@ -221,8 +221,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e92527f6d0fe45342ab542b47346d45f, type: 3}
-  m_Color: {r: 1, g: 0.86416996, b: 0.3150943, a: 1}
+  m_Sprite: {fileID: 21300000, guid: fbc591eb906dc3b43884601408d2a7d6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -256,7 +256,7 @@ Animator:
   m_GameObject: {fileID: 33463285}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e78259975aa8f9545ad9367979d67a54, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -282,7 +282,6 @@ MonoBehaviour:
   minFlipSpeed: 0.1
   jumpGravityScale: 2.5
   fallGravityScale: 2.5
-  groundedGravityScale: 1
   resetSpeedOnLand: 0
 --- !u!1 &391725270
 GameObject:
@@ -295,7 +294,7 @@ GameObject:
   - component: {fileID: 391725273}
   - component: {fileID: 391725272}
   - component: {fileID: 391725271}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     // Input
     private Vector2 movementInput;
     private bool jumpInput;
+    private bool transformInput;
 
     // Player Component
     private Animator animator;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private int animatorRunningSpeed;
     private int animatorJumpTrigger;
     private int animatorTransformTrigger;
+    private int animatorFlipTrigger;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
         animatorRunningSpeed = Animator.StringToHash("RunningSpeed");
         animatorJumpTrigger = Animator.StringToHash("Jump");
         animatorTransformTrigger = Animator.StringToHash("Transform");
+        animatorFlipTrigger = Animator.StringToHash("Flip");
     }
     // Update is called once per frame
     void Update()
@@ -72,11 +75,14 @@ public class PlayerController : MonoBehaviour
         if (!isJumping && Input.GetKeyDown(KeyCode.Space))
             jumpInput = true;
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+            transformInput = true;
         
     }
 
     private void FixedUpdate()
     {
+        UpdateTranform();
         UpdateGrounding();
         UpdateVelocity();
         UpdateDirection();
@@ -86,6 +92,14 @@ public class PlayerController : MonoBehaviour
     }
 
     #region ¸üÐÂº¯Êý 
+    private void UpdateTranform()
+    {
+        if (transformInput)
+        {
+            transformInput = false;
+            animator.SetTrigger(animatorTransformTrigger);
+        }
+    }
     private void UpdateGrounding()
     {
         // Use character collider to check if touching ground layers
