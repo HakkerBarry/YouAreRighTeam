@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -69,8 +70,8 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: Private Hart offers the quest to hack the emperor's computer to get the
-        launch codes.
+      value: Private Hart offers the quest to hack the emperor's computer to get
+        the launch codes.
       type: 0
       typeString: CustomFieldType_Text
     - title: IsPlayer
@@ -182,7 +183,8 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_Text
     - title: Success Description
-      value: You get the launch codes and can redirect the weapon away from your homeworld.
+      value: You get the launch codes and can redirect the weapon away from your
+        homeworld.
       type: 0
       typeString: CustomFieldType_Text
     - title: Failure Description
@@ -422,8 +424,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 468
@@ -497,8 +497,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 252
@@ -570,8 +568,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 468
@@ -643,8 +639,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 720
@@ -716,8 +710,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 252
@@ -783,8 +775,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 720
@@ -856,8 +846,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 253
@@ -921,12 +909,11 @@ MonoBehaviour:
       conditionsString: 
       userScript: 'SetQuestState("Get the Launch Codes", "active");
 
-        Variable["Alert"] = "Mission: Get the Launch Codes"'
+        Variable["Alert"]
+        = "Mission: Get the Launch Codes"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 252
@@ -992,8 +979,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 468
@@ -1108,8 +1093,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 396
@@ -1171,8 +1154,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 120
@@ -1244,8 +1225,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 396
@@ -1317,8 +1296,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 600
@@ -1390,8 +1367,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 24
@@ -1457,8 +1432,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 204
@@ -1522,12 +1495,11 @@ MonoBehaviour:
       conditionsString: Variable["enemiesKilled"] < 5
       userScript: 'SetQuestState("Enemy Attack", "active");
 
-        Variable["Alert"] = "Objective: Kill 5 Enemies"'
+        Variable["Alert"]
+        = "Objective: Kill 5 Enemies"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 24
@@ -1593,8 +1565,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 396
@@ -1660,8 +1630,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 600
@@ -1679,9 +1647,9 @@ MonoBehaviour:
       typeString: 
     - title: Description
       value: This conversation demonstrates how to use the dialogue system for other
-        kinds of interaction (searching a body). The first node moves the camera to
-        the "Down" angle on the body over 1 second. The last node moves back to the
-        original position.
+        kinds of interaction (searching a body). The first node moves the camera
+        to the "Down" angle on the body over 1 second. The last node moves back to
+        the original position.
       type: 0
       typeString: 
     - title: Actor
@@ -1767,8 +1735,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 120
@@ -1832,8 +1798,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 120
@@ -1889,8 +1853,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 30
@@ -1940,8 +1902,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 120
@@ -1997,8 +1957,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 120
@@ -2015,9 +1973,10 @@ MonoBehaviour:
       type: 0
       typeString: 
     - title: Description
-      value: This conversation is for the computer terminal where the player can download
-        the launch codes to complete the Get the Launch Codes quest. It overrides
-        the Default Sequence to delay instead of playing voiceover (see below).
+      value: This conversation is for the computer terminal where the player can
+        download the launch codes to complete the Get the Launch Codes quest. It
+        overrides the Default Sequence to delay instead of playing voiceover (see
+        below).
       type: 0
       typeString: 
     - title: Actor
@@ -2103,8 +2062,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 432
@@ -2140,7 +2097,8 @@ MonoBehaviour:
       - title: Sequence
         value: 'Camera(Terminal Camera Angle,,1);
 
-          TextInput(Text Field UI,Password,password)'
+          TextInput(Text Field
+          UI,Password,password)'
         type: 0
         typeString: 
       conversationID: 5
@@ -2162,8 +2120,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 429
@@ -2225,8 +2181,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 429
@@ -2288,8 +2242,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 298
@@ -2357,8 +2309,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 549
@@ -2436,8 +2386,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 189
@@ -2503,8 +2451,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 381
@@ -2568,12 +2514,11 @@ MonoBehaviour:
       conditionsString: 
       userScript: 'SetQuestState("Get the Launch Codes", "success");
 
-        Variable["Alert"] = "Mission Complete: Launch Codes Acquired"'
+        Variable["Alert"]
+        = "Mission Complete: Launch Codes Acquired"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 84
@@ -2645,8 +2590,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 288
@@ -2781,8 +2724,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 20
@@ -2848,8 +2789,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 200
@@ -2915,8 +2854,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 200
@@ -2982,8 +2919,6 @@ MonoBehaviour:
       onExecute:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 200
