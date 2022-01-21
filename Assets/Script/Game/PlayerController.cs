@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] bool resetSpeedOnLand = false;
+    [SerializeField] Transform footPoint;
 
     private float Speed = 0.0f;
     private float JumpForce = 0.0f;
@@ -184,7 +185,10 @@ public class PlayerController : MonoBehaviour
             isFalling = true;
 
         // Jump
-        if (jumpInput && groundType != GroundType.None)
+        // Ray cast Ground
+        RaycastHit2D hit = Physics2D.Raycast(footPoint.position,new Vector2(0,-1),0.2f, middleGroundMask);
+        
+        if (jumpInput && groundType != GroundType.None && hit)
         {
             // Jump using impulse force
             rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
@@ -216,6 +220,10 @@ public class PlayerController : MonoBehaviour
             isFalling = false;
 
             // TODO Play audio
+        }
+        else if(isJumping&&!isFalling)
+        {
+            isJumping = false;
         }
     }
     void UpdatePlayerState()
