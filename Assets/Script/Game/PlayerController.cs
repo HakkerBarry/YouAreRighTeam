@@ -7,18 +7,39 @@ public enum GroundType
     None,
     Plane
 }
+public enum PlayerState
+{
+    Alive,
+    Dead
+}
 
 public class PlayerController : MonoBehaviour
 {
     readonly Vector3 flippedScale = new Vector3(-1, 1, 1);
 
-    [Header("Movement")]
-    [SerializeField] float Speed = 0.0f;
-    [SerializeField] float jumpForce = 0.0f;
-    [SerializeField] float minFlipSpeed = 0.1f;
-    [SerializeField] float jumpGravityScale = 1.0f;
-    [SerializeField] float fallGravityScale = 1.0f;
+    [Header("正常状态")]
+    [SerializeField] float NormalSpeed = 0.0f;
+    [SerializeField] float NormalJumpForce = 0.0f;
+    [SerializeField] float NormalMinFlipSpeed = 0.1f;
+    [SerializeField] float NormalJumpGravityScale = 1.0f;
+    [SerializeField] float NormalFallGravityScale = 1.0f;
+
+    [Header("梦游状态")]
+    [SerializeField] float SleepSpeed = 0.0f;
+    [SerializeField] float SleepJumpForce = 0.0f;
+    [SerializeField] float SleepMinFlipSpeed = 0.1f;
+    [SerializeField] float SleepJumpGravityScale = 1.0f;
+    [SerializeField] float SleepFallGravityScale = 1.0f;
+
+    [Header("Other")]
     [SerializeField] bool resetSpeedOnLand = false;
+
+    private float Speed = 0.0f;
+    private float JumpForce = 0.0f;
+    private float MinFlipSpeed = 0.1f;
+    private float JumpGravityScale = 1.0f;
+    private float FallGravityScale = 1.0f;
+
 
     // Input
     private Vector2 movementInput;
@@ -37,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private bool isFlipped;
     private bool isJumping;
     private bool isFalling;
+    private bool isSleep = false;
 
     // Animator paramater
     private int animatorGroundedBool;
@@ -58,6 +80,9 @@ public class PlayerController : MonoBehaviour
         animatorJumpTrigger = Animator.StringToHash("Jump");
         animatorTransformTrigger = Animator.StringToHash("Transform");
         animatorFlipTrigger = Animator.StringToHash("Flip");
+
+        // init player property
+        SetNormalProperty();
     }
     // Update is called once per frame
     void Update()
@@ -97,6 +122,12 @@ public class PlayerController : MonoBehaviour
         if (transformInput)
         {
             transformInput = false;
+            // 判断是否睡眠，修改玩家参数
+            if (isSleep)
+                SetNormalProperty();
+            else
+                SetSleepProperty();
+            isSleep = !isSleep;
             animator.SetTrigger(animatorTransformTrigger);
         }
     }
@@ -128,12 +159,12 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateDirection()
     {
-        if (rigidbody.velocity.x > minFlipSpeed && isFlipped)
+        if (rigidbody.velocity.x > MinFlipSpeed && isFlipped)
         {
             isFlipped = false;
             transform.localScale = Vector3.one;
         }
-        else if (rigidbody.velocity.x < -minFlipSpeed && !isFlipped)
+        else if (rigidbody.velocity.x < -MinFlipSpeed && !isFlipped)
         {
             isFlipped = true;
             transform.localScale = flippedScale;
@@ -142,8 +173,8 @@ public class PlayerController : MonoBehaviour
     private void UpdateGravityScale()
     {
         // Use grounded gravity scale by default.
-        var gravityScale = jumpGravityScale;
-        gravityScale = rigidbody.velocity.y > 0.0f ? jumpGravityScale : fallGravityScale;
+        var gravityScale = JumpGravityScale;
+        gravityScale = rigidbody.velocity.y > 0.0f ? JumpGravityScale : FallGravityScale;
         rigidbody.gravityScale = gravityScale;
     }
     void UpdateJump()
@@ -156,7 +187,7 @@ public class PlayerController : MonoBehaviour
         if (jumpInput && groundType != GroundType.None)
         {
             // Jump using impulse force
-            rigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
 
             // Set animator
             animator.SetTrigger(animatorJumpTrigger);
@@ -192,4 +223,22 @@ public class PlayerController : MonoBehaviour
 
     }
     #endregion
+
+    void SetSleepProperty()
+    {
+        Speed = SleepSpeed;
+        JumpForce = SleepJumpForce;
+        MinFlipSpeed = SleepMinFlipSpeed;
+        JumpGravityScale = SleepJumpGravityScale;
+        FallGravityScale = SleepFallGravityScale;
+    }
+
+    void SetNormalProperty()
+    {
+        Speed = NormalSpeed;
+        JumpForce = NormalJumpForce;
+        MinFlipSpeed = NormalMinFlipSpeed;
+        JumpGravityScale = NormalJumpGravityScale;
+        FallGravityScale = NormalFallGravityScale;
+    }
 }
