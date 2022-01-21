@@ -30,10 +30,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float SleepMinFlipSpeed = 0.1f;
     [SerializeField] float SleepJumpGravityScale = 1.0f;
     [SerializeField] float SleepFallGravityScale = 1.0f;
+    [SerializeField] float DashDuration = 0.2f;
+    [SerializeField] float DashSpeed = 100.0f;
 
     [Header("Other")]
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
+    [SerializeField] GameObject dashTrail;
+
+    [Header("Input")]
+
 
     private float Speed = 0.0f;
     private float JumpSpeed = 0.0f;
@@ -46,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementInput;
     private bool jumpInput;
     private bool transformInput;
+    private bool dashInput;
 
     // Player Component
     private Animator animator;
@@ -56,12 +63,16 @@ public class PlayerController : MonoBehaviour
     // Player State
     private Vector2 prevVelocity;
     private GroundType groundType;
+    private Vector2 preDashVelocity;
+    private float ConstantDashDuration;
+    [Header("Debug")]
     [SerializeField] bool isFlipped;
     [SerializeField] bool isJumping;
     [SerializeField] bool isFalling;
     [SerializeField] bool isSleeping = false;
     [SerializeField] bool canJumpAgain = false;
     [SerializeField] bool inAir;
+    [SerializeField] bool isDashing = false;
 
     // Animator paramater
     private int animatorGroundedBool;
@@ -86,6 +97,8 @@ public class PlayerController : MonoBehaviour
 
         // init player property
         SetNormalProperty();
+        dashTrail.SetActive(false);
+        ConstantDashDuration = DashDuration;
     }
     // Update is called once per frame
     void Update()
@@ -109,6 +122,10 @@ public class PlayerController : MonoBehaviour
             else
                 jumpInput = false;
         }
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            dashInput = true;
+        }
             
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -122,12 +139,45 @@ public class PlayerController : MonoBehaviour
         UpdateGrounding();
         UpdateVelocity();
         UpdateDirection();
+        UpdateDash();
         UpdateJump();
         UpdateGravityScale();
         UpdatePlayerState();
     }
 
     #region ¸üÐÂº¯Êý 
+    private void UpdateDash()
+    {
+        if (!isSleeping)
+        {
+            dashInput = false;
+            return;
+        }
+        if(dashInput)
+        {
+            preDashVelocity = rigidbody.velocity;
+            if(isFlipped)
+                rigidbody.velocity = new Vector2(-DashSpeed, preDashVelocity.y);
+            else
+                rigidbody.velocity = new Vector2(DashSpeed, preDashVelocity.y);
+            isDashing = true;
+            dashTrail.SetActive(true);
+            dashInput = false;
+        }
+        if(isDashing)
+        {
+            ConstantDashDuration -= Time.fixedDeltaTime;
+            if(ConstantDashDuration<0)
+            {
+                ConstantDashDuration = DashDuration;
+                rigidbody.velocity = preDashVelocity;
+                dashTrail.SetActive(false);
+                isDashing = false;
+            }
+        }
+
+
+    }
     private void UpdateTranform()
     {
         if (transformInput)
@@ -155,6 +205,8 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateVelocity()
     {
+        if (isDashing)
+            return;
         // No acceleration
         Vector2 velocity = rigidbody.velocity;
         velocity.x = (movementInput * Speed).x;
