@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isFalling;
     [SerializeField] bool isSleeping = false;
     [SerializeField] bool canJumpAgain = false;
+    [SerializeField] bool inAir;
 
     // Animator paramater
     private int animatorGroundedBool;
@@ -189,6 +190,7 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateJump()
     {
+        // 正常模式
         if(!isSleeping)
         {
             // Set falling flag
@@ -225,8 +227,9 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
             }
         }
+        // 梦游模式
         else
-        {
+        { 
             // Set falling flag
             if (isJumping && rigidbody.velocity.y < 0)
                 isFalling = true;
@@ -235,7 +238,20 @@ public class PlayerController : MonoBehaviour
             // Ray cast Ground
             if(jumpInput)
             {
-                if (!canJumpAgain)
+                if(inAir)
+                {
+                    if(canJumpAgain)
+                    {
+                        Vector2 velocity = rigidbody.velocity;
+                        velocity.y = JumpSpeed;
+                        rigidbody.velocity = velocity;
+                        animator.SetTrigger(animatorJumpTrigger);
+                        jumpInput = false;
+                        isJumping = true;
+                        canJumpAgain = false;
+                    }
+                }
+                else
                 {
                     RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
                     if (groundType != GroundType.None && hit)
@@ -249,16 +265,7 @@ public class PlayerController : MonoBehaviour
                         canJumpAgain = true;
                     }
                 }
-                else if (canJumpAgain)
-                {
-                    Vector2 velocity = rigidbody.velocity;
-                    velocity.y = JumpSpeed;
-                    rigidbody.velocity = velocity;
-                    animator.SetTrigger(animatorJumpTrigger);
-                    jumpInput = false;
-                    isJumping = true;
-                    canJumpAgain = false;
-                }
+                
             }
             // Landed
             else if (isJumping && isFalling && groundType != GroundType.None)
@@ -282,7 +289,15 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePlayerState()
     {
-
+        RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
+        if (!hit)
+        {
+            if (!inAir)
+                canJumpAgain = true;
+            inAir = true;
+        }
+        else
+            inAir = false;
     }
     #endregion
 
