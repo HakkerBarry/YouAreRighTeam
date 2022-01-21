@@ -19,14 +19,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("正常状态")]
     [SerializeField] float NormalSpeed = 0.0f;
-    [SerializeField] float NormalJumpForce = 0.0f;
+    [SerializeField] float NormalJumpSpeed = 0.0f;
     [SerializeField] float NormalMinFlipSpeed = 0.1f;
     [SerializeField] float NormalJumpGravityScale = 1.0f;
     [SerializeField] float NormalFallGravityScale = 1.0f;
 
     [Header("梦游状态")]
     [SerializeField] float SleepSpeed = 0.0f;
-    [SerializeField] float SleepJumpForce = 0.0f;
+    [SerializeField] float SleepJumpSpeed = 0.0f;
     [SerializeField] float SleepMinFlipSpeed = 0.1f;
     [SerializeField] float SleepJumpGravityScale = 1.0f;
     [SerializeField] float SleepFallGravityScale = 1.0f;
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform footPoint;
 
     private float Speed = 0.0f;
-    private float JumpForce = 0.0f;
+    private float JumpSpeed = 0.0f;
     private float MinFlipSpeed = 0.1f;
     private float JumpGravityScale = 1.0f;
     private float FallGravityScale = 1.0f;
@@ -56,10 +56,11 @@ public class PlayerController : MonoBehaviour
     // Player State
     private Vector2 prevVelocity;
     private GroundType groundType;
-    private bool isFlipped;
-    private bool isJumping;
-    private bool isFalling;
-    private bool isSleep = false;
+    [SerializeField] bool isFlipped;
+    [SerializeField] bool isJumping;
+    [SerializeField] bool isFalling;
+    [SerializeField] bool isSleeping = false;
+    [SerializeField] bool canJumpAgain = false;
 
     // Animator paramater
     private int animatorGroundedBool;
@@ -98,8 +99,16 @@ public class PlayerController : MonoBehaviour
         movementInput = new Vector2(moveHorizontal, 0);
 
         // Jumping input
-        if (!isJumping && Input.GetKeyDown(KeyCode.Space))
-            jumpInput = true;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!isJumping)
+                jumpInput = true;
+            else if (isJumping && isSleeping)
+                jumpInput = true;
+            else
+                jumpInput = false;
+        }
+            
 
         if (Input.GetKeyDown(KeyCode.Tab))
             transformInput = true;
@@ -124,11 +133,11 @@ public class PlayerController : MonoBehaviour
         {
             transformInput = false;
             // 判断是否睡眠，修改玩家参数
-            if (isSleep)
+            if (isSleeping)
                 SetNormalProperty();
             else
                 SetSleepProperty();
-            isSleep = !isSleep;
+            isSleeping = !isSleeping;
             animator.SetTrigger(animatorTransformTrigger);
         }
     }
@@ -180,51 +189,96 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateJump()
     {
-        // Set falling flag
-        if (isJumping && rigidbody.velocity.y < 0)
-            isFalling = true;
-
-        // Jump
-        // Ray cast Ground
-        RaycastHit2D hit = Physics2D.Raycast(footPoint.position,new Vector2(0,-1),0.2f, middleGroundMask);
-        
-        if (jumpInput && groundType != GroundType.None && hit)
+        if(!isSleeping)
         {
-            // Jump using impulse force
-            rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
+            // Set falling flag
+            if (isJumping && rigidbody.velocity.y < 0)
+                isFalling = true;
 
-            // Set animator
-            animator.SetTrigger(animatorJumpTrigger);
-
-            // We've consumed the jump, reset it.
-            jumpInput = false;
-
-            // Set jumping flag
-            isJumping = true;
-
-            // TODO Play audio
-        }
-
-        // Landed
-        else if (isJumping && isFalling && groundType != GroundType.None)
-        {
-            // Since collision with ground stops rigidbody, reset velocity
-            if (resetSpeedOnLand)
+            // Jump
+            // Ray cast Ground
+            RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
+            if (jumpInput && groundType != GroundType.None && hit)
             {
-                prevVelocity.y = rigidbody.velocity.y;
-                rigidbody.velocity = prevVelocity;
+                Vector2 velocity = rigidbody.velocity;
+                velocity.y = JumpSpeed;
+                rigidbody.velocity = velocity;
+                animator.SetTrigger(animatorJumpTrigger);
+                jumpInput = false;
+                isJumping = true;
             }
 
-            // Reset jumping flags
-            isJumping = false;
-            isFalling = false;
-
-            // TODO Play audio
+            // Landed
+            else if (isJumping && isFalling && groundType != GroundType.None)
+            {
+                if (resetSpeedOnLand)
+                {
+                    prevVelocity.y = rigidbody.velocity.y;
+                    rigidbody.velocity = prevVelocity;
+                }
+                isJumping = false;
+                isFalling = false;
+                // TODO Play audio
+            }
+            else if (isJumping && !isFalling)
+            {
+                isJumping = false;
+            }
         }
-        else if(isJumping&&!isFalling)
+        else
         {
-            isJumping = false;
+            // Set falling flag
+            if (isJumping && rigidbody.velocity.y < 0)
+                isFalling = true;
+
+            // Jump
+            // Ray cast Ground
+            if(jumpInput)
+            {
+                if (!canJumpAgain)
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
+                    if (groundType != GroundType.None && hit)
+                    {
+                        Vector2 velocity = rigidbody.velocity;
+                        velocity.y = JumpSpeed;
+                        rigidbody.velocity = velocity;
+                        animator.SetTrigger(animatorJumpTrigger);
+                        jumpInput = false;
+                        isJumping = true;
+                        canJumpAgain = true;
+                    }
+                }
+                else if (canJumpAgain)
+                {
+                    Vector2 velocity = rigidbody.velocity;
+                    velocity.y = JumpSpeed;
+                    rigidbody.velocity = velocity;
+                    animator.SetTrigger(animatorJumpTrigger);
+                    jumpInput = false;
+                    isJumping = true;
+                    canJumpAgain = false;
+                }
+            }
+            // Landed
+            else if (isJumping && isFalling && groundType != GroundType.None)
+            {
+                if (resetSpeedOnLand)
+                {
+                    prevVelocity.y = rigidbody.velocity.y;
+                    rigidbody.velocity = prevVelocity;
+                }
+                isJumping = false;
+                isFalling = false;
+                canJumpAgain = false;
+                // TODO Play audio
+            }
+            //else if (isJumping && !isFalling)
+            //{
+            //    isJumping = false;
+            //}
         }
+        
     }
     void UpdatePlayerState()
     {
@@ -235,7 +289,7 @@ public class PlayerController : MonoBehaviour
     void SetSleepProperty()
     {
         Speed = SleepSpeed;
-        JumpForce = SleepJumpForce;
+        JumpSpeed = SleepJumpSpeed;
         MinFlipSpeed = SleepMinFlipSpeed;
         JumpGravityScale = SleepJumpGravityScale;
         FallGravityScale = SleepFallGravityScale;
@@ -244,7 +298,7 @@ public class PlayerController : MonoBehaviour
     void SetNormalProperty()
     {
         Speed = NormalSpeed;
-        JumpForce = NormalJumpForce;
+        JumpSpeed = NormalJumpSpeed;
         MinFlipSpeed = NormalMinFlipSpeed;
         JumpGravityScale = NormalJumpGravityScale;
         FallGravityScale = NormalFallGravityScale;
