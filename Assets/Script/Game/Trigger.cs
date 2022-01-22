@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Trigger : MonoBehaviour
 {
     [SerializeField] GameObject Block;
@@ -19,6 +20,8 @@ public class Trigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Block.GetComponent<Animator>().SetTrigger("Open");
+        Block.GetComponent<Collider2D>().enabled = false;
         this.gameObject.SetActive(false);
     }
+
 }
