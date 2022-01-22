@@ -12,4 +12,4 @@ EditorBuildSettings:
     path: Assets/Scenes/TestGameScene/CharacterStateMachine.unity
     guid: 16993c1b981d0014580cb71502823656
   m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: 46a75964179a3e94092bdb80ab0272e2, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 1ec00c0a2dcbecf49a483ee4a7b1eeb8, type: 2}
