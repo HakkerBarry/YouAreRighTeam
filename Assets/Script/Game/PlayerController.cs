@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GroundType
 {
@@ -17,14 +18,14 @@ public class PlayerController : MonoBehaviour
 {
     readonly Vector3 flippedScale = new Vector3(-1, 1, 1);
 
-    [Header("Õı³£×´Ì¬")]
+    [Header("æ­£å¸¸çŠ¶æ€")]
     [SerializeField] float NormalSpeed = 0.0f;
     [SerializeField] float NormalJumpSpeed = 0.0f;
     [SerializeField] float NormalMinFlipSpeed = 0.1f;
     [SerializeField] float NormalJumpGravityScale = 1.0f;
     [SerializeField] float NormalFallGravityScale = 1.0f;
 
-    [Header("ÃÎÓÎ×´Ì¬")]
+    [Header("æ¢¦æ¸¸çŠ¶æ€")]
     [SerializeField] float SleepSpeed = 0.0f;
     [SerializeField] float SleepJumpSpeed = 0.0f;
     [SerializeField] float SleepMinFlipSpeed = 0.1f;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
     [SerializeField] GameObject dashTrail;
+    [SerializeField, Range(0.01f, 0.1f)] float sceneSwitchSpeed = 0.05f;
 
     [Header("Input")]
 
@@ -139,7 +141,7 @@ public class PlayerController : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            // TODO ½»»¥
+            // TODO äº¤äº’
         }
     }
 
@@ -153,9 +155,10 @@ public class PlayerController : MonoBehaviour
         UpdateJump();
         UpdateGravityScale();
         UpdatePlayerState();
+        UpdateBackGround();
     }
 
-    #region ¸üĞÂº¯Êı 
+    #region æ›´æ–°å‡½æ•° 
     private void UpdateDash()
     {
         if (!isSleeping)
@@ -193,7 +196,7 @@ public class PlayerController : MonoBehaviour
         if (transformInput)
         {
             transformInput = false;
-            // ÅĞ¶ÏÊÇ·ñË¯Ãß£¬ĞŞ¸ÄÍæ¼Ò²ÎÊı
+            // åˆ¤æ–­æ˜¯å¦ç¡çœ ï¼Œä¿®æ”¹ç©å®¶å‚æ•°
             if (isSleeping)
                 SetNormalProperty();
             else
@@ -252,7 +255,7 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateJump()
     {
-        // Õı³£Ä£Ê½
+        // æ­£å¸¸æ¨¡å¼
         if(!isSleeping)
         {
             // Set falling flag
@@ -289,7 +292,7 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
             }
         }
-        // ÃÎÓÎÄ£Ê½
+        // æ¢¦æ¸¸æ¨¡å¼
         else
         { 
             // Set falling flag
@@ -362,6 +365,21 @@ public class PlayerController : MonoBehaviour
             inAir = false;
     }
     #endregion
+
+    void UpdateBackGround()
+    {
+        GameObject backGround = GameObject.Find("BG");
+        Image BG = backGround.GetComponent<Image>();
+        float cutoff = BG.material.GetFloat("_Cutoff");
+        if (isSleeping)
+        {
+            if(cutoff < 1) BG.material.SetFloat("_Cutoff", cutoff + sceneSwitchSpeed);
+        }
+        else
+        {
+            if(cutoff > 0) BG.material.SetFloat("_Cutoff", cutoff - sceneSwitchSpeed);
+        }
+    }
 
     void SetSleepProperty()
     {
