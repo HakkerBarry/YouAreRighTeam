@@ -31,7 +31,6 @@ public class DialogueOpener : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enter NPC");
         if (other.CompareTag("NPC"))
         {
             overlapedItemNum++;

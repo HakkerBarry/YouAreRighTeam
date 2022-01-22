@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float NormalMinFlipSpeed = 0.1f;
     [SerializeField] float NormalJumpGravityScale = 1.0f;
     [SerializeField] float NormalFallGravityScale = 1.0f;
+    [SerializeField] Collider2D[] realEnableCollider;
 
     [Header("√Œ”Œ◊¥Ã¨")]
     [SerializeField] float SleepSpeed = 0.0f;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float SleepFallGravityScale = 1.0f;
     [SerializeField] float DashDuration = 0.2f;
     [SerializeField] float DashSpeed = 100.0f;
+    [SerializeField] Collider2D[] dreamEnableCollider;
 
     [Header("Other")]
     [SerializeField] bool resetSpeedOnLand = false;
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 prevVelocity;
     private GroundType groundType;
     private Vector2 preDashVelocity;
+    private Vector3 startPostion;
     private float ConstantDashDuration;
     [Header("Debug")]
     [SerializeField] bool isFlipped;
@@ -90,6 +93,7 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
         middleGroundMask = LayerMask.GetMask("MiddleBackground");
+        startPostion = this.transform.position;
 
         // Animator paramater Hash id
         animatorGroundedBool = Animator.StringToHash("Grounded");
@@ -397,6 +401,14 @@ public class PlayerController : MonoBehaviour
         MinFlipSpeed = SleepMinFlipSpeed;
         JumpGravityScale = SleepJumpGravityScale;
         FallGravityScale = SleepFallGravityScale;
+        foreach(Collider2D c in realEnableCollider)
+        {
+            c.enabled = false;
+        }
+        foreach (Collider2D c in dreamEnableCollider)
+        {
+            c.enabled = true;
+        }
     }
 
     void SetNormalProperty()
@@ -406,5 +418,21 @@ public class PlayerController : MonoBehaviour
         MinFlipSpeed = NormalMinFlipSpeed;
         JumpGravityScale = NormalJumpGravityScale;
         FallGravityScale = NormalFallGravityScale;
+        foreach (Collider2D c in realEnableCollider)
+        {
+            c.enabled = true;
+        }
+        foreach (Collider2D c in dreamEnableCollider)
+        {
+            c.enabled = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Die"))
+        {
+            transform.position = startPostion;
+        }
     }
 }
