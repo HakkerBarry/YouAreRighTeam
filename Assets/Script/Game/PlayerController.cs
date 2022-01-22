@@ -167,9 +167,9 @@ public class PlayerController : MonoBehaviour
         {
             preDashVelocity = rigidbody.velocity;
             if(isFlipped)
-                rigidbody.velocity = new Vector2(-DashSpeed, preDashVelocity.y);
+                rigidbody.velocity = new Vector2(-DashSpeed, rigidbody.velocity.y);
             else
-                rigidbody.velocity = new Vector2(DashSpeed, preDashVelocity.y);
+                rigidbody.velocity = new Vector2(DashSpeed, rigidbody.velocity.y);
             isDashing = true;
             dashTrail.SetActive(true);
             dashInput = false;
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
             if(ConstantDashDuration<0)
             {
                 ConstantDashDuration = DashDuration;
-                rigidbody.velocity = preDashVelocity;
+                rigidbody.velocity = new Vector2(preDashVelocity.x, rigidbody.velocity.y);
                 dashTrail.SetActive(false);
                 isDashing = false;
             }
