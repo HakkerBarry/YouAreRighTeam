@@ -811,7 +811,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u7B56\u5212\uFF1A\t\u9879\u5929\u8BED\n T A \uFF1A\t\u8A79\u6CBF\n\u97F3\u4E50\uFF1A
+  m_Text: "\u7B56\u5212\uFF1A\t\u9879\u5929\u8BED\n T A \uFF1A\t\u8A79\u6CBF\n\u97F3\u6548\uFF1A
     \t\u5B54\u4FEA\u84C9\n\u7F8E\u672F\uFF1A\t\u6797\u542F\u7FF0\uFF0C\u5E38\u6893\u6DB5\n\u7A0B\u5E8F\uFF1A\t\u5F20\u5B50\u8F69\uFF0C\u5F20\u6052\n"
 --- !u!222 &783476505
 CanvasRenderer:
