@@ -250,12 +250,12 @@ public class PlayerController : MonoBehaviour
         if (rigidbody.velocity.x > MinFlipSpeed && isFlipped)
         {
             isFlipped = false;
-            transform.localScale = Vector3.one;
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else if (rigidbody.velocity.x < -MinFlipSpeed && !isFlipped)
         {
             isFlipped = true;
-            transform.localScale = flippedScale;
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
     private void UpdateGravityScale()
