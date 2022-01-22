@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         movementInput = new Vector2(moveHorizontal, 0);
 
         // Jumping input
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space))
         {
             if(!isSleeping)
             {
@@ -122,7 +122,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                jumpInput = true;
+                if(inAir&&canJumpAgain)
+                    jumpInput = true;
+                else if(!isJumping)
+                    jumpInput = true;
             }
         }
         if(Input.GetKeyDown(KeyCode.LeftShift))
@@ -131,9 +134,13 @@ public class PlayerController : MonoBehaviour
         }
             
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.E))
             transformInput = true;
         
+        if(Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            // TODO ½»»¥
+        }
     }
 
     private void FixedUpdate()
@@ -160,9 +167,9 @@ public class PlayerController : MonoBehaviour
         {
             preDashVelocity = rigidbody.velocity;
             if(isFlipped)
-                rigidbody.velocity = new Vector2(-DashSpeed, preDashVelocity.y);
+                rigidbody.velocity = new Vector2(-DashSpeed, rigidbody.velocity.y);
             else
-                rigidbody.velocity = new Vector2(DashSpeed, preDashVelocity.y);
+                rigidbody.velocity = new Vector2(DashSpeed, rigidbody.velocity.y);
             isDashing = true;
             dashTrail.SetActive(true);
             dashInput = false;
@@ -173,7 +180,7 @@ public class PlayerController : MonoBehaviour
             if(ConstantDashDuration<0)
             {
                 ConstantDashDuration = DashDuration;
-                rigidbody.velocity = preDashVelocity;
+                rigidbody.velocity = new Vector2(preDashVelocity.x, rigidbody.velocity.y);
                 dashTrail.SetActive(false);
                 isDashing = false;
             }
