@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     // Input
     private Vector2 movementInput;
-    private bool jumpInput;
+    [SerializeField] private bool jumpInput;
     private bool transformInput;
     private bool dashInput;
 
@@ -115,12 +115,15 @@ public class PlayerController : MonoBehaviour
         // Jumping input
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!isJumping)
-                jumpInput = true;
-            else if (isJumping && isSleeping)
-                jumpInput = true;
+            if(!isSleeping)
+            {
+                if (!isJumping&&!inAir)
+                    jumpInput = true;
+            }
             else
-                jumpInput = false;
+            {
+                jumpInput = true;
+            }
         }
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
