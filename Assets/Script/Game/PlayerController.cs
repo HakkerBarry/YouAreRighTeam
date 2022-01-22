@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
     [SerializeField] GameObject dashTrail;
+    [SerializeField] private Material material;
     [SerializeField, Range(0.01f, 0.1f)] float sceneSwitchSpeed = 0.05f;
 
     [Header("Input")]
@@ -366,18 +367,16 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    void UpdateBackGround()
+    public void UpdateBackGround()
     {
-        GameObject backGround = GameObject.Find("BG");
-        Image BG = backGround.GetComponent<Image>();
-        float cutoff = BG.material.GetFloat("_Cutoff");
+        float cutoff = material.GetFloat("_Cutoff");
         if (isSleeping)
         {
-            if(cutoff < 1) BG.material.SetFloat("_Cutoff", cutoff + sceneSwitchSpeed);
+            if(cutoff < 1) material.SetFloat("_Cutoff", cutoff + sceneSwitchSpeed);
         }
         else
         {
-            if(cutoff > 0) BG.material.SetFloat("_Cutoff", cutoff - sceneSwitchSpeed);
+            if(cutoff > 0) material.SetFloat("_Cutoff", cutoff - sceneSwitchSpeed);
         }
     }
 
