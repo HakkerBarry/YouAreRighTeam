@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
     [SerializeField] GameObject dashTrail;
+    [SerializeField] Collider2D forwardCollider;
 
     [Header("Input")]
 
@@ -217,6 +218,20 @@ public class PlayerController : MonoBehaviour
     {
         if (isDashing)
             return;
+        if (forwardCollider.IsTouchingLayers(middleGroundMask))
+        {
+            if(isFlipped)// ÕýÏò
+            {
+                movementInput.x = Mathf.Max(0, movementInput.x);
+            }
+            else
+            {
+                movementInput.x = Mathf.Min(0, movementInput.x);
+            }
+            
+        }
+            
+
         // No acceleration
         Vector2 velocity = rigidbody.velocity;
         velocity.x = (movementInput * Speed).x;
@@ -235,12 +250,12 @@ public class PlayerController : MonoBehaviour
         if (rigidbody.velocity.x > MinFlipSpeed && isFlipped)
         {
             isFlipped = false;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = Vector3.one;
         }
         else if (rigidbody.velocity.x < -MinFlipSpeed && !isFlipped)
         {
             isFlipped = true;
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = flippedScale;
         }
     }
     private void UpdateGravityScale()
@@ -261,7 +276,7 @@ public class PlayerController : MonoBehaviour
 
             // Jump
             // Ray cast Ground
-            RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
+            RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.4f, middleGroundMask);
             if (jumpInput && groundType != GroundType.None && hit)
             {
                 Vector2 velocity = rigidbody.velocity;
@@ -315,7 +330,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
+                    RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.4f, middleGroundMask);
                     if (groundType != GroundType.None && hit)
                     {
                         Vector2 velocity = rigidbody.velocity;
@@ -351,8 +366,9 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePlayerState()
     {
-        RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.3f, middleGroundMask);
-        Debug.DrawLine(footPoint.position, footPoint.position + new Vector3(0, -0.3f, 0));
+        RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.4f, middleGroundMask);
+        Debug.DrawLine
+            (footPoint.position, hit.point,Color.red);
         if (!hit)
         {
             if (!inAir)
