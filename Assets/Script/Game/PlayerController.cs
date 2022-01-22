@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
     [SerializeField] GameObject dashTrail;
+    [SerializeField] Collider2D forwardCollider;
 
     [Header("Input")]
 
@@ -217,6 +218,20 @@ public class PlayerController : MonoBehaviour
     {
         if (isDashing)
             return;
+        if (forwardCollider.IsTouchingLayers(middleGroundMask))
+        {
+            if(isFlipped)// ÕýÏò
+            {
+                movementInput.x = Mathf.Max(0, movementInput.x);
+            }
+            else
+            {
+                movementInput.x = Mathf.Min(0, movementInput.x);
+            }
+            
+        }
+            
+
         // No acceleration
         Vector2 velocity = rigidbody.velocity;
         velocity.x = (movementInput * Speed).x;
