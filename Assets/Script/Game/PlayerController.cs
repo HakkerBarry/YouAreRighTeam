@@ -344,7 +344,8 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePlayerState()
     {
-        RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.2f, middleGroundMask);
+        RaycastHit2D hit = Physics2D.Raycast(footPoint.position, new Vector2(0, -1), 0.3f, middleGroundMask);
+        Debug.DrawLine(footPoint.position, footPoint.position + new Vector3(0, -0.3f, 0));
         if (!hit)
         {
             if (!inAir)
