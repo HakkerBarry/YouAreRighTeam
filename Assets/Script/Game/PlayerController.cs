@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform footPoint;
     [SerializeField] GameObject dashTrail;
     [SerializeField] Collider2D forwardCollider;
+    [SerializeField] Material sceneMaterial;
+    [SerializeField, Range(0.01f, 0.2f)] float sceneSwitchSpeed = 0.05f;
 
     [Header("Input")]
 
@@ -154,6 +156,7 @@ public class PlayerController : MonoBehaviour
         UpdateJump();
         UpdateGravityScale();
         UpdatePlayerState();
+        UpdateLerpScene();
     }
 
     #region ¸üÐÂº¯Êý 
@@ -377,6 +380,14 @@ public class PlayerController : MonoBehaviour
         }
         else
             inAir = false;
+    }
+
+    void UpdateLerpScene()
+    {
+        float lerpValue = sceneMaterial.GetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a");
+        Debug.Log("LerpValue: " + lerpValue);
+        if (isSleeping) sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a", lerpValue > 0 ? lerpValue - sceneSwitchSpeed : lerpValue);
+        else sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a",  lerpValue < 1 ? lerpValue + sceneSwitchSpeed : lerpValue);
     }
     #endregion
 
