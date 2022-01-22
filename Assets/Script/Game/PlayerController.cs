@@ -385,7 +385,6 @@ public class PlayerController : MonoBehaviour
     void UpdateLerpScene()
     {
         float lerpValue = sceneMaterial.GetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a");
-        Debug.Log("LerpValue: " + lerpValue);
         if (isSleeping) sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a", lerpValue > 0 ? lerpValue - sceneSwitchSpeed : lerpValue);
         else sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a",  lerpValue < 1 ? lerpValue + sceneSwitchSpeed : lerpValue);
     }

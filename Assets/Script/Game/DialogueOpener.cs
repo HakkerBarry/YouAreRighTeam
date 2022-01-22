@@ -19,7 +19,7 @@ public class DialogueOpener : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if(canTalk) DialogueManager.StartConversation(conversation);
         }
@@ -31,6 +31,7 @@ public class DialogueOpener : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Enter NPC");
         if (other.CompareTag("NPC"))
         {
             overlapedItemNum++;
