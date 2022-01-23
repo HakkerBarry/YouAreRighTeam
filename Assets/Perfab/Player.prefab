@@ -1046,6 +1046,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   jumpAudio: {fileID: 1273991261}
   landAudio: {fileID: 631356884}
   walk: {fileID: 8300000, guid: 361bf3d347b73b047ae382c15971bbeb, type: 3}

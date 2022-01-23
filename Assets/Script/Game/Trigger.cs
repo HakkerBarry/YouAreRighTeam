@@ -20,7 +20,9 @@ public class Trigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Block.GetComponent<Animator>().SetTrigger("Open");
-        Block.GetComponent<Collider2D>().enabled = false;
+        Block.GetComponent<Collider2D>().isTrigger = true;
+        Block.GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().Play();
         this.gameObject.SetActive(false);
     }
 
