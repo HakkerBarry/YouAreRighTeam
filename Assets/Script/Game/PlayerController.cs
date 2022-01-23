@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider2D[] dreamEnableCollider;
 
     [Header("Audio")]
+    [SerializeField] AudioSource jumpAudio;
+    [SerializeField] AudioSource landAudio;
     [SerializeField] AudioClip walk;
     [SerializeField] AudioClip run;
     [SerializeField] AudioClip jump;
@@ -104,7 +106,8 @@ public class PlayerController : MonoBehaviour
         audio = GetComponent<AudioSource>();
         middleGroundMask = LayerMask.GetMask("MiddleBackground");
         startPostion = this.transform.position;
-
+        jumpAudio.clip = jump;
+        landAudio.clip = land;
         // Animator paramater Hash id
         animatorGroundedBool = Animator.StringToHash("Grounded");
         animatorRunningSpeed = Animator.StringToHash("RunningSpeed");
@@ -160,6 +163,7 @@ public class PlayerController : MonoBehaviour
                     jumpInput = true;
             }
         }
+        
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             dashInput = true;
@@ -319,6 +323,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger(animatorJumpTrigger);
                 jumpInput = false;
                 isJumping = true;
+                jumpAudio.Play(); 
             }
 
             // Landed
@@ -332,11 +337,12 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
                 isFalling = false;
                 // TODO Play audio
+                landAudio.Play();
             }
-            else if (isJumping && !isFalling)
-            {
-                isJumping = false;
-            }
+            //else if (isJumping && !isFalling)
+            //{
+            //    isJumping = false;
+            //}
         }
         // √Œ”Œƒ£ Ω
         else
@@ -360,6 +366,7 @@ public class PlayerController : MonoBehaviour
                         jumpInput = false;
                         isJumping = true;
                         canJumpAgain = false;
+                        jumpAudio.Play();
                     }
                 }
                 else
@@ -374,6 +381,7 @@ public class PlayerController : MonoBehaviour
                         jumpInput = false;
                         isJumping = true;
                         canJumpAgain = true;
+                        jumpAudio.Play();
                     }
                 }
                 
@@ -390,6 +398,7 @@ public class PlayerController : MonoBehaviour
                 isFalling = false;
                 canJumpAgain = false;
                 // TODO Play audio
+                landAudio.Play();
             }
             //else if (isJumping && !isFalling)
             //{
