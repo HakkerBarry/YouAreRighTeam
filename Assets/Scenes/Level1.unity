@@ -3016,45 +3016,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1918680896}
     m_Modifications:
-    - target: {fileID: 1058171044, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_targetts
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2116051328, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.2130833
-      objectReference: {fileID: 0}
-    - target: {fileID: 2116051328, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.026646614
-      objectReference: {fileID: 0}
     - target: {fileID: 947659753810709508, guid: c264f58892f5a47448f6685086b8e796, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709510, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709510, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709511, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_Simulated
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 947659753810709512, guid: c264f58892f5a47448f6685086b8e796, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709512, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709512, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 947659753810709512, guid: c264f58892f5a47448f6685086b8e796, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3096,30 +3064,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709513, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a6014c4e79805684fa22a58460c495c2, type: 3}
-    - target: {fileID: 947659753810709513, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 86af52821a43c2c4a8dcbd99c6054fd5, type: 2}
-    - target: {fileID: 947659753810709514, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: sceneMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: cde0645eca0d49944a071886060a3f45, type: 2}
     - target: {fileID: 947659753810709514, guid: c264f58892f5a47448f6685086b8e796, type: 3}
       propertyPath: volumeController
       value: 
       objectReference: {fileID: 1293769050}
-    - target: {fileID: 947659753810709514, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: realEnableCollider.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 947659753810709514, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: dreamEnableCollider.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 947659753810709514, guid: c264f58892f5a47448f6685086b8e796, type: 3}
       propertyPath: realEnableCollider.Array.data[0]
       value: 
@@ -3156,10 +3104,6 @@ PrefabInstance:
       propertyPath: dreamEnableCollider.Array.data[3]
       value: 
       objectReference: {fileID: 1017990089}
-    - target: {fileID: 947659753810709515, guid: c264f58892f5a47448f6685086b8e796, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c264f58892f5a47448f6685086b8e796, type: 3}
 --- !u!1 &884709328
