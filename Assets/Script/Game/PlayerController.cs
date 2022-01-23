@@ -434,5 +434,10 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = startPostion;
         }
+
+        if (other.CompareTag("SavePoint"))
+        {
+            startPostion = other.transform.position;
+        }
     }
 }
