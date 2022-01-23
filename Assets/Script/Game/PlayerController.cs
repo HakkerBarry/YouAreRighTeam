@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Material sceneMaterial;
     [SerializeField, Range(0.01f, 0.2f)] float sceneSwitchSpeed = 0.05f;
     [SerializeField] float stepsTimeGap = 1f;
+    [SerializeField] VolumeController volumeController;
     private float stepsTimer;
     [Header("Input")]
 
@@ -229,6 +230,7 @@ public class PlayerController : MonoBehaviour
     {
         if (transformInput)
         {
+            volumeController.Transform();
             transformInput = false;
             // 判断是否睡眠，修改玩家参数
             if (isSleeping)
@@ -424,6 +426,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateLerpScene()
     {
+        
         float lerpValue = sceneMaterial.GetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a");
         if (isSleeping) sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a", lerpValue > 0 ? lerpValue - sceneSwitchSpeed : lerpValue);
         else sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a",  lerpValue < 1 ? lerpValue + sceneSwitchSpeed : lerpValue);
