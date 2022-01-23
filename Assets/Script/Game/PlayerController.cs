@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour
             else
                 rigidbody.velocity = new Vector2(DashSpeed, rigidbody.velocity.y);
             isDashing = true;
-            dashTrail.SetActive(true);
+            //dashTrail.SetActive(true);
             dashInput = false;
         }
         if(isDashing)
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
             {
                 ConstantDashDuration = DashDuration;
                 rigidbody.velocity = new Vector2(preDashVelocity.x, rigidbody.velocity.y);
-                dashTrail.SetActive(false);
+                //dashTrail.SetActive(false);
                 isDashing = false;
             }
         }
