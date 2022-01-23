@@ -35,6 +35,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float DashSpeed = 100.0f;
     [SerializeField] Collider2D[] dreamEnableCollider;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip walk;
+    [SerializeField] AudioClip run;
+    [SerializeField] AudioClip jump;
+    [SerializeField] AudioClip land;
+
+
     [Header("Other")]
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
@@ -42,7 +49,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider2D forwardCollider;
     [SerializeField] Material sceneMaterial;
     [SerializeField, Range(0.01f, 0.2f)] float sceneSwitchSpeed = 0.05f;
-
+    [SerializeField] float stepsTimeGap = 1f;
+    private float stepsTimer;
     [Header("Input")]
 
 
@@ -64,6 +72,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody;
     private Collider2D collider;
     private LayerMask middleGroundMask;
+    private AudioSource audio;
 
     // Player State
     private Vector2 prevVelocity;
@@ -92,6 +101,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+        audio = GetComponent<AudioSource>();
         middleGroundMask = LayerMask.GetMask("MiddleBackground");
         startPostion = this.transform.position;
 
@@ -118,7 +128,22 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             moveHorizontal = 1.0f;
         movementInput = new Vector2(moveHorizontal, 0);
+        // TODO Play audio
 
+        if (isSleeping)
+        {
+            audio.clip = run;
+        }
+        else
+        {
+            audio.clip = walk;
+        }
+        if (Mathf.Abs(movementInput.x) > MinFlipSpeed && !audio.isPlaying&&!inAir)
+            audio.Play();
+        //else if (Mathf.Abs(velocity.x) > MinFlipSpeed)
+        //    audio.UnPause();
+        else if (Mathf.Abs(movementInput.x) < MinFlipSpeed|| inAir)
+            audio.Stop();
         // Jumping input
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -139,7 +164,7 @@ public class PlayerController : MonoBehaviour
         {
             dashInput = true;
         }
-            
+        UpdateVelocity();
 
         if (Input.GetKeyDown(KeyCode.E))
             transformInput = true;
@@ -154,7 +179,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateTranform();
         UpdateGrounding();
-        UpdateVelocity();
+        
         UpdateDirection();
         UpdateDash();
         UpdateJump();
@@ -237,7 +262,7 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-            
+
 
         // No acceleration
         Vector2 velocity = rigidbody.velocity;
@@ -245,12 +270,14 @@ public class PlayerController : MonoBehaviour
         movementInput = Vector2.zero;
         rigidbody.velocity = velocity;
 
+        
+
         // Update animator
         var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / Speed;
         animator.SetFloat(animatorRunningSpeed, horizontalSpeedNormalized);
 
-        // TODO Play audio
-       
+        
+
     }
     void UpdateDirection()
     {
