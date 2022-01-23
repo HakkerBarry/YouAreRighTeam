@@ -35,6 +35,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float DashSpeed = 100.0f;
     [SerializeField] Collider2D[] dreamEnableCollider;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource jumpAudio;
+    [SerializeField] AudioSource landAudio;
+    [SerializeField] AudioClip walk;
+    [SerializeField] AudioClip run;
+    [SerializeField] AudioClip jump;
+    [SerializeField] AudioClip land;
+
+
     [Header("Other")]
     [SerializeField] bool resetSpeedOnLand = false;
     [SerializeField] Transform footPoint;
@@ -42,7 +51,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider2D forwardCollider;
     [SerializeField] Material sceneMaterial;
     [SerializeField, Range(0.01f, 0.2f)] float sceneSwitchSpeed = 0.05f;
-
+    [SerializeField] float stepsTimeGap = 1f;
+    [SerializeField] VolumeController volumeController;
+    private float stepsTimer;
     [Header("Input")]
 
 
@@ -64,6 +75,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody;
     private Collider2D collider;
     private LayerMask middleGroundMask;
+    private AudioSource audio;
 
     // Player State
     private Vector2 prevVelocity;
@@ -92,9 +104,11 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+        audio = GetComponent<AudioSource>();
         middleGroundMask = LayerMask.GetMask("MiddleBackground");
         startPostion = this.transform.position;
-
+        jumpAudio.clip = jump;
+        landAudio.clip = land;
         // Animator paramater Hash id
         animatorGroundedBool = Animator.StringToHash("Grounded");
         animatorRunningSpeed = Animator.StringToHash("RunningSpeed");
@@ -118,7 +132,22 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             moveHorizontal = 1.0f;
         movementInput = new Vector2(moveHorizontal, 0);
+        // TODO Play audio
 
+        if (isSleeping)
+        {
+            audio.clip = run;
+        }
+        else
+        {
+            audio.clip = walk;
+        }
+        if (Mathf.Abs(movementInput.x) > MinFlipSpeed && !audio.isPlaying&&!inAir)
+            audio.Play();
+        //else if (Mathf.Abs(velocity.x) > MinFlipSpeed)
+        //    audio.UnPause();
+        else if (Mathf.Abs(movementInput.x) < MinFlipSpeed|| inAir)
+            audio.Stop();
         // Jumping input
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -135,11 +164,12 @@ public class PlayerController : MonoBehaviour
                     jumpInput = true;
             }
         }
+        
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             dashInput = true;
         }
-            
+        UpdateVelocity();
 
         if (Input.GetKeyDown(KeyCode.E))
             transformInput = true;
@@ -154,7 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateTranform();
         UpdateGrounding();
-        UpdateVelocity();
+        
         UpdateDirection();
         UpdateDash();
         UpdateJump();
@@ -200,6 +230,7 @@ public class PlayerController : MonoBehaviour
     {
         if (transformInput)
         {
+            volumeController.Transform();
             transformInput = false;
             // 判断是否睡眠，修改玩家参数
             if (isSleeping)
@@ -237,7 +268,7 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-            
+
 
         // No acceleration
         Vector2 velocity = rigidbody.velocity;
@@ -245,12 +276,14 @@ public class PlayerController : MonoBehaviour
         movementInput = Vector2.zero;
         rigidbody.velocity = velocity;
 
+        
+
         // Update animator
         var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / Speed;
         animator.SetFloat(animatorRunningSpeed, horizontalSpeedNormalized);
 
-        // TODO Play audio
-       
+        
+
     }
     void UpdateDirection()
     {
@@ -292,6 +325,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger(animatorJumpTrigger);
                 jumpInput = false;
                 isJumping = true;
+                jumpAudio.Play(); 
             }
 
             // Landed
@@ -305,11 +339,12 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
                 isFalling = false;
                 // TODO Play audio
+                landAudio.Play();
             }
-            else if (isJumping && !isFalling)
-            {
-                isJumping = false;
-            }
+            //else if (isJumping && !isFalling)
+            //{
+            //    isJumping = false;
+            //}
         }
         // 梦游模式
         else
@@ -333,6 +368,7 @@ public class PlayerController : MonoBehaviour
                         jumpInput = false;
                         isJumping = true;
                         canJumpAgain = false;
+                        jumpAudio.Play();
                     }
                 }
                 else
@@ -347,6 +383,7 @@ public class PlayerController : MonoBehaviour
                         jumpInput = false;
                         isJumping = true;
                         canJumpAgain = true;
+                        jumpAudio.Play();
                     }
                 }
                 
@@ -363,6 +400,7 @@ public class PlayerController : MonoBehaviour
                 isFalling = false;
                 canJumpAgain = false;
                 // TODO Play audio
+                landAudio.Play();
             }
             //else if (isJumping && !isFalling)
             //{
@@ -388,6 +426,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateLerpScene()
     {
+        
         float lerpValue = sceneMaterial.GetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a");
         if (isSleeping) sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a", lerpValue > 0 ? lerpValue - sceneSwitchSpeed : lerpValue);
         else sceneMaterial.SetFloat("Vector1_9d12b51f880a4daa83f84a0f9287934a",  lerpValue < 1 ? lerpValue + sceneSwitchSpeed : lerpValue);

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/StartPanel.unity
     guid: 82d72ed9aa3eb7a43b4b2d8e96ba240e
   - enabled: 1
-    path: Assets/Scenes/TestGameScene/CharacterStateMachine.unity
-    guid: 16993c1b981d0014580cb71502823656
+    path: Assets/Scenes/Level1.unity
+    guid: 9dfbdf8ce52cc014abe6033c351331c3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1ec00c0a2dcbecf49a483ee4a7b1eeb8, type: 2}
