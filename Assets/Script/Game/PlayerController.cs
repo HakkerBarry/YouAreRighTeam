@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public enum GroundType
 {
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(0.01f, 0.2f)] float sceneSwitchSpeed = 0.05f;
     [SerializeField] float stepsTimeGap = 1f;
     [SerializeField] VolumeController volumeController;
+    [SerializeField] GameObject RealityPanel;
+    [SerializeField] GameObject DreamPanel;
     private float stepsTimer;
     [Header("Input")]
 
@@ -448,6 +452,8 @@ public class PlayerController : MonoBehaviour
         {
             c.enabled = true;
         }
+        RealityPanel.GetComponent<Image>().DOFade(1, 0.5f);
+        DreamPanel.GetComponent<Image>().DOFade(0, 0.5f);
     }
 
     void SetNormalProperty()
@@ -465,6 +471,9 @@ public class PlayerController : MonoBehaviour
         {
             c.enabled = false;
         }
+        //RealityPanel.SetActive(false);
+        RealityPanel.GetComponent<Image>().DOFade(0, 0.5f);
+        DreamPanel.GetComponent<Image>().DOFade(1, 0.5f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
