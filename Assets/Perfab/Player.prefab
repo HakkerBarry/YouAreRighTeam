@@ -720,7 +720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &947659753796849625
 Transform:
   m_ObjectHideFlags: 0
@@ -892,7 +892,7 @@ Transform:
   m_GameObject: {fileID: 947659753810709508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.06, y: -1.65, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 947659753103938883}
   - {fileID: 947659753796849625}
@@ -944,7 +944,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a6014c4e79805684fa22a58460c495c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ece20659d45247847a19ff30a0337406, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -969,7 +969,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1.81}
   m_Direction: 0
 --- !u!50 &947659753810709511
 Rigidbody2D:
@@ -1061,6 +1061,8 @@ MonoBehaviour:
   sceneSwitchSpeed: 0.05
   stepsTimeGap: 1
   volumeController: {fileID: 0}
+  RealityPanel: {fileID: 0}
+  DreamPanel: {fileID: 0}
   jumpInput: 0
   isFlipped: 0
   isJumping: 0
